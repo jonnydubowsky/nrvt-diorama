@@ -47,12 +47,12 @@ export function Railroad({
       rotation={[rotation[0], rotation[1] + placement.heading, rotation[2]]}
       scale={scale}
     >
-      <mesh position={[0, 0.12, 0]} receiveShadow>
-        <boxGeometry args={[1.15, 0.22, length]} />
+      <mesh position={[0, 0.1, 0]} receiveShadow>
+        <boxGeometry args={[0.85, 0.18, length]} />
         <meshLambertMaterial color="#8a6a4e" flatShading />
       </mesh>
-      <mesh position={[0, 0.26, 0]} receiveShadow>
-        <boxGeometry args={[0.95, 0.08, length]} />
+      <mesh position={[0, 0.22, 0]} receiveShadow>
+        <boxGeometry args={[0.72, 0.07, length]} />
         <meshLambertMaterial color={ballastColor} flatShading />
       </mesh>
 

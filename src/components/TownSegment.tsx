@@ -1,6 +1,5 @@
 import { useMemo } from "react";
-import { Billboard } from "@react-three/drei";
-import { makeLabelTexture } from "../lib/geometry";
+import { Html } from "@react-three/drei";
 import { palette } from "../lib/palette";
 import { mulberry32, randRange } from "../lib/rng";
 import type { TransformProps } from "../lib/types";
@@ -91,8 +90,6 @@ export function TownSegment({
     });
   }, [buildingCount, seed]);
 
-  const label = useMemo(() => makeLabelTexture(name, subtitle), [name, subtitle]);
-
   return (
     <group position={position} rotation={rotation} scale={scale}>
       <mesh position={[0, 0.015, 0]} receiveShadow>
@@ -109,12 +106,12 @@ export function TownSegment({
         />
       ))}
 
-      <Billboard position={[0, 1.55, 0]} follow>
-        <mesh>
-          <planeGeometry args={[2.1, 0.52]} />
-          <meshBasicMaterial map={label} toneMapped={false} />
-        </mesh>
-      </Billboard>
+      <Html position={[0, 1.45, 0]} center distanceFactor={18} style={{ pointerEvents: "none" }}>
+        <div className="town-label">
+          <strong>{name}</strong>
+          <span>{subtitle}</span>
+        </div>
+      </Html>
     </group>
   );
 }
