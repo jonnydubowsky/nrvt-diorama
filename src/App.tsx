@@ -16,10 +16,6 @@ export default function App() {
           antialias: true,
           toneMapping: THREE.NoToneMapping,
         }}
-        onCreated={({ gl }) => {
-          gl.shadowMap.enabled = true;
-          gl.shadowMap.type = THREE.PCFSoftShadowMap;
-        }}
       >
         <Diorama playing={playing} />
       </Canvas>
