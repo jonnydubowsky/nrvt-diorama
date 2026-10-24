@@ -9,12 +9,12 @@ export type SceneCameraProps = TransformProps & {
 };
 
 export function SceneCamera({
-  position = [20, 14, 18],
+  position = [30, 18, 12],
   rotation = [0, 0, 0],
   scale = [1, 1, 1],
   projection = "perspective",
-  fov = 28,
-  zoom = 22,
+  fov = 38,
+  zoom = 1.45,
   target = [0, 0.2, 0],
 }: SceneCameraProps) {
   return (
