@@ -83,9 +83,9 @@ export function TownSegment({
           number,
           number,
         ],
-        width: randRange(rng, 0.42, 0.62),
-        depth: randRange(rng, 0.36, 0.52),
-        height: randRange(rng, 0.38, 0.62),
+        width: randRange(rng, 0.52, 0.78),
+        depth: randRange(rng, 0.44, 0.64),
+        height: randRange(rng, 0.48, 0.78),
         yaw: angle + randRange(rng, -0.2, 0.2),
       };
     });
@@ -111,7 +111,7 @@ export function TownSegment({
 
       <Billboard position={[0, 1.55, 0]} follow>
         <mesh>
-          <planeGeometry args={[1.7, 0.42]} />
+          <planeGeometry args={[2.1, 0.52]} />
           <meshBasicMaterial map={label} toneMapped={false} />
         </mesh>
       </Billboard>

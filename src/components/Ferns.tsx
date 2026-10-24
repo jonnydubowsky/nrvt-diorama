@@ -1,6 +1,6 @@
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
-import { BASE, getRiverCurve, getTrailCurve } from "../lib/curves";
+import { BASE, getRiverCurve, getTrailCurve, minDistanceToCurve } from "../lib/curves";
 import { useInstanceLayout } from "../lib/instances";
 import { mulberry32, randRange } from "../lib/rng";
 import type { TransformProps } from "../lib/types";
@@ -39,14 +39,9 @@ export function Ferns({
       guard += 1;
       const x = randRange(rng, -BASE.width * 0.4, BASE.width * 0.4);
       const z = randRange(rng, -BASE.length * 0.44, BASE.length * 0.44);
-      let min = Infinity;
-      for (let i = 0; i <= 20; i++) {
-        const t = i / 20;
-        const r = river.getPointAt(t);
-        const p = trail.getPointAt(t);
-        min = Math.min(min, Math.hypot(x - r.x, z - r.z), Math.hypot(x - p.x, z - p.z));
-      }
-      if (min < 0.45 || min > 2.4) continue;
+      const riverDist = minDistanceToCurve(x, z, river);
+      const trailDist = minDistanceToCurve(x, z, trail);
+      if (riverDist < 0.85 || trailDist < 0.4 || riverDist > 2.6) continue;
 
       for (let b = 0; b < blades; b++) {
         const yaw = (b / blades) * Math.PI * 2 + rng() * 0.2;

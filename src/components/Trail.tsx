@@ -18,7 +18,7 @@ export function Trail({
   scale = [1, 1, 1],
   meander = 1,
   offset = 2.15,
-  width = 0.62,
+  width = 0.78,
   stoneColor = palette.trail,
   edgeColor = palette.trailEdge,
 }: TrailProps) {

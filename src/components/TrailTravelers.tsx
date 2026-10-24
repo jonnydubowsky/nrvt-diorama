@@ -63,13 +63,13 @@ export function TrailTravelers({
 
   return (
     <group position={position} rotation={rotation} scale={scale}>
-      <group ref={a}>
+      <group ref={a} scale={1.35}>
         <Cyclist jerseyColor={palette.jerseyTeal} playing={playing} />
       </group>
-      <group ref={b}>
+      <group ref={b} scale={1.35}>
         <Cyclist jerseyColor={palette.jerseyRust} playing={playing} />
       </group>
-      <group ref={w}>
+      <group ref={w} scale={1.4}>
         <Walker playing={playing} />
       </group>
     </group>

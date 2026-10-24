@@ -24,7 +24,7 @@ export function River({
   rotation = [0, 0, 0],
   scale = [1, 1, 1],
   meander = 1,
-  width = 1.2,
+  width = 1.55,
   waterColor = palette.water,
   deepColor = palette.waterDeep,
   boulderColor = palette.boulder,

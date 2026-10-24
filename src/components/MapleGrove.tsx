@@ -1,6 +1,6 @@
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
-import { BASE, getRiverCurve, getTrailCurve } from "../lib/curves";
+import { BASE, getRiverCurve, getTrailCurve, minDistanceToCurve } from "../lib/curves";
 import { useInstanceLayout } from "../lib/instances";
 import { palette } from "../lib/palette";
 import { mulberry32, randRange } from "../lib/rng";
@@ -14,23 +14,6 @@ export type MapleGroveProps = TransformProps & {
   meander?: number;
   trailOffset?: number;
 };
-
-function awayFromPaths(
-  x: number,
-  z: number,
-  river: THREE.CatmullRomCurve3,
-  trail: THREE.CatmullRomCurve3,
-) {
-  const samples = 28;
-  let min = Infinity;
-  for (let i = 0; i <= samples; i++) {
-    const t = i / samples;
-    const r = river.getPointAt(t);
-    const p = trail.getPointAt(t);
-    min = Math.min(min, Math.hypot(x - r.x, z - r.z), Math.hypot(x - p.x, z - p.z));
-  }
-  return min;
-}
 
 export function MapleGrove({
   position = [0, 0, 0],
@@ -61,8 +44,8 @@ export function MapleGrove({
       guard += 1;
       const x = randRange(rng, -BASE.width * 0.42, BASE.width * 0.42);
       const z = randRange(rng, -BASE.length * 0.46, BASE.length * 0.46);
-      if (awayFromPaths(x, z, river, trail) < 1.15) continue;
-      if (Math.abs(x) > 2.1 && rng() > 0.55) continue;
+      if (minDistanceToCurve(x, z, river) < 1.55) continue;
+      if (minDistanceToCurve(x, z, trail) < 1.15) continue;
 
       const h = randRange(rng, 0.85, 1.35);
       dummy.position.set(x, h * 0.38, z);

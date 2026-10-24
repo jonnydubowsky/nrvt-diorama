@@ -1,6 +1,6 @@
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
-import { BASE, getRiverCurve, getTrailCurve } from "../lib/curves";
+import { BASE, getRiverCurve, getTrailCurve, minDistanceToCurve } from "../lib/curves";
 import { useInstanceLayout } from "../lib/instances";
 import { palette } from "../lib/palette";
 import { mulberry32, randRange } from "../lib/rng";
@@ -42,14 +42,9 @@ export function MossyBoulders({
       guard += 1;
       const x = randRange(rng, -BASE.width * 0.38, BASE.width * 0.38);
       const z = randRange(rng, -BASE.length * 0.42, BASE.length * 0.42);
-      let min = Infinity;
-      for (let i = 0; i <= 20; i++) {
-        const t = i / 20;
-        const r = river.getPointAt(t);
-        const p = trail.getPointAt(t);
-        min = Math.min(min, Math.hypot(x - r.x, z - r.z), Math.hypot(x - p.x, z - p.z));
-      }
-      if (min < 0.7 || min > 2.8) continue;
+      const riverDist = minDistanceToCurve(x, z, river);
+      const trailDist = minDistanceToCurve(x, z, trail);
+      if (riverDist < 0.9 || trailDist < 0.55 || riverDist > 2.9) continue;
 
       dummy.position.set(x, 0.12, z);
       dummy.rotation.set(rng() * 0.7, rng() * Math.PI, rng() * 0.5);

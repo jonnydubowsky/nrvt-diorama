@@ -18,8 +18,8 @@ export function SceneLighting({
   sunColor = "#ffc48a",
   sunIntensity = 1.55,
   ambientIntensity = 0.28,
-  fogNear = 36,
-  fogFar = 78,
+  fogNear = 52,
+  fogFar = 110,
   shadows = true,
 }: SceneLightingProps) {
   return (
@@ -44,7 +44,7 @@ export function SceneLighting({
         />
       </group>
       <ContactShadows
-        position={[0, -1.4, 0]}
+        position={[0, -1.82, 0]}
         opacity={0.28}
         scale={56}
         blur={2.4}

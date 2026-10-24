@@ -1,6 +1,6 @@
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
-import { BASE, getRiverCurve, getTrailCurve } from "../lib/curves";
+import { BASE, getRiverCurve, getTrailCurve, minDistanceToCurve } from "../lib/curves";
 import { useInstanceLayout } from "../lib/instances";
 import { palette } from "../lib/palette";
 import { mulberry32, randRange } from "../lib/rng";
@@ -42,14 +42,8 @@ export function BirchGrove({
       guard += 1;
       const x = randRange(rng, -BASE.width * 0.4, BASE.width * 0.38);
       const z = randRange(rng, -BASE.length * 0.44, BASE.length * 0.44);
-      let min = Infinity;
-      for (let i = 0; i <= 24; i++) {
-        const t = i / 24;
-        const r = river.getPointAt(t);
-        const p = trail.getPointAt(t);
-        min = Math.min(min, Math.hypot(x - r.x, z - r.z), Math.hypot(x - p.x, z - p.z));
-      }
-      if (min < 1.05) continue;
+      if (minDistanceToCurve(x, z, river) < 1.5) continue;
+      if (minDistanceToCurve(x, z, trail) < 1.1) continue;
 
       const h = randRange(rng, 1.0, 1.55);
       dummy.position.set(x, h * 0.42, z);

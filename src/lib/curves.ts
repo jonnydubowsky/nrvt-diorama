@@ -4,20 +4,20 @@ import type { Vec3 } from "./types";
 export const BASE = {
   width: 10,
   length: 46,
-  soilDepth: 1.32,
+  soilDepth: 1.7,
 } as const;
 
 /** North (Danbury) → south (Norwalk). X meanders; Y is the water surface. */
 export const DEFAULT_RIVER_POINTS: Vec3[] = [
-  [0.35, -0.05, 21.6],
-  [-1.05, -0.05, 16.2],
-  [0.85, -0.05, 11.0],
-  [-0.55, -0.05, 5.6],
-  [1.15, -0.05, 0.4],
-  [-0.35, -0.05, -5.2],
-  [0.75, -0.05, -10.8],
-  [-0.65, -0.05, -16.0],
-  [0.25, -0.05, -21.6],
+  [0.35, 0.055, 21.6],
+  [-1.05, 0.055, 16.2],
+  [0.85, 0.055, 11.0],
+  [-0.55, 0.055, 5.6],
+  [1.15, 0.055, 0.4],
+  [-0.35, 0.055, -5.2],
+  [0.75, 0.055, -10.8],
+  [-0.65, 0.055, -16.0],
+  [0.25, 0.055, -21.6],
 ];
 
 export function riverPoints(meander = 1): THREE.Vector3[] {
@@ -42,7 +42,7 @@ export function getTrailCurve(meander = 1, offset = 2.15, samples = 80) {
     const tangent = river.getTangentAt(t);
     const side = new THREE.Vector3().crossVectors(up, tangent).normalize();
     points.push(
-      new THREE.Vector3(p.x + side.x * offset, 0.025, p.z + side.z * offset),
+      new THREE.Vector3(p.x + side.x * offset, 0.07, p.z + side.z * offset),
     );
   }
 
@@ -82,4 +82,19 @@ export function townPosition(
 export function headingOnCurve(curve: THREE.Curve<THREE.Vector3>, t: number) {
   const tangent = curve.getTangentAt(THREE.MathUtils.clamp(t, 0, 1));
   return Math.atan2(tangent.x, tangent.z);
+}
+
+export function minDistanceToCurve(
+  x: number,
+  z: number,
+  curve: THREE.Curve<THREE.Vector3>,
+  samples = 72,
+) {
+  let min = Infinity;
+  for (let i = 0; i <= samples; i++) {
+    const p = curve.getPointAt(i / samples);
+    const d = Math.hypot(x - p.x, z - p.z);
+    if (d < min) min = d;
+  }
+  return min;
 }

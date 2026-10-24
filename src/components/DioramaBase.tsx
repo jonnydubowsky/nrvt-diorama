@@ -38,9 +38,13 @@ export function DioramaBase({
 
   return (
     <group position={position} rotation={rotation} scale={scale}>
-      <mesh position={[0, 0.01, 0]} receiveShadow>
-        <boxGeometry args={[width, 0.04, length]} />
+      <mesh position={[0, 0.02, 0]} receiveShadow>
+        <boxGeometry args={[width - 0.28, 0.05, length - 0.12]} />
         <meshLambertMaterial color={grassColor} flatShading />
+      </mesh>
+      <mesh position={[0, 0.005, 0]} receiveShadow>
+        <boxGeometry args={[width, 0.03, length]} />
+        <meshLambertMaterial color={palette.topsoil} flatShading />
       </mesh>
 
       {layers.map((layer) => (

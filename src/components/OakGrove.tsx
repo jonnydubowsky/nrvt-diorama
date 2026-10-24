@@ -1,6 +1,6 @@
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
-import { BASE, getRiverCurve, getTrailCurve } from "../lib/curves";
+import { BASE, getRiverCurve, getTrailCurve, minDistanceToCurve } from "../lib/curves";
 import { useInstanceLayout } from "../lib/instances";
 import { palette } from "../lib/palette";
 import { mulberry32, randRange } from "../lib/rng";
@@ -14,22 +14,6 @@ export type OakGroveProps = TransformProps & {
   meander?: number;
   trailOffset?: number;
 };
-
-function clearance(
-  x: number,
-  z: number,
-  river: THREE.CatmullRomCurve3,
-  trail: THREE.CatmullRomCurve3,
-) {
-  let min = Infinity;
-  for (let i = 0; i <= 26; i++) {
-    const t = i / 26;
-    const r = river.getPointAt(t);
-    const p = trail.getPointAt(t);
-    min = Math.min(min, Math.hypot(x - r.x, z - r.z), Math.hypot(x - p.x, z - p.z));
-  }
-  return min;
-}
 
 export function OakGrove({
   position = [0, 0, 0],
@@ -58,7 +42,8 @@ export function OakGrove({
       guard += 1;
       const x = randRange(rng, -BASE.width * 0.4, BASE.width * 0.4);
       const z = randRange(rng, -BASE.length * 0.45, BASE.length * 0.45);
-      if (clearance(x, z, river, trail) < 1.25) continue;
+      if (minDistanceToCurve(x, z, river) < 1.6) continue;
+      if (minDistanceToCurve(x, z, trail) < 1.2) continue;
 
       const h = randRange(rng, 0.9, 1.4);
       dummy.position.set(x, h * 0.36, z);

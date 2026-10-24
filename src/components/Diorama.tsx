@@ -38,9 +38,9 @@ export function Diorama({
   playing = true,
   meander = 1,
   trailOffset = 2.15,
-  mapleCount = 36,
-  oakCount = 26,
-  birchCount = 24,
+  mapleCount = 28,
+  oakCount = 20,
+  birchCount = 18,
   projection = "perspective",
 }: DioramaProps) {
   return (
