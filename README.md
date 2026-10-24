@@ -70,13 +70,15 @@ Every piece lives in `src/components/` and accepts `position`, `rotation`, and `
 | `Cyclist` / `Walker` | Low-poly figures | `jerseyColor` / `coatColor`, `playing` |
 | `TrailTravelers` | Two cyclists + one walker on the trail curve | `playing`, `meander`, `trailOffset`, `cyclistSpeed`, `walkerSpeed` |
 | `SceneLighting` | Late-afternoon sun, fog, contact shadow | `sunColor`, `sunIntensity`, `ambientIntensity`, `fogNear`, `fogFar`, `shadows` |
-| `SceneCamera` | Narrow-FOV or orthographic + orbit | `projection`, `fov`, `zoom`, `target` |
+| `SceneCamera` | Narrow-FOV perspective (default) or orthographic + orbit | `projection`, `fov`, `zoom`, `target` |
 
 Vegetation uses a seeded PRNG (`mulberry32`) so counts and colors can change without the grove jumping around.
 
 ## Layout
 
 Positive **Z** is north. The river runs the length of the block; the trail stays on the east bank. Towns sit further east of the path: Danbury, Redding, Ridgefield, Wilton, Norwalk.
+
+The default camera is perspective at `fov` 38 so the whole valley and the HTML town labels stay readable. Set `projection` to `"orthographic"` on `Diorama` or `SceneCamera` for a flatter isometric view — use `zoom` around `1.4`, not a large number, or the frustum collapses to a sliver. HTML labels can scale poorly in ortho; switch back to perspective if names blow up.
 
 ## What was verified from the Triplex repo
 
